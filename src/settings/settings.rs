@@ -17,7 +17,7 @@ impl Settings {
             .build()
             .unwrap();
 
-        info!("Setting has been loaded.");
+        info!("Settings has been loaded.");
 
         Self {
             port: settings.get_int("server.port").unwrap(),

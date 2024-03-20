@@ -5,7 +5,7 @@ use axum::{
 };
 use rust_ddd::settings::settings::Settings;
 use tower::{timeout::TimeoutLayer, ServiceBuilder};
-use tower_http::{cors::{Any, CorsLayer}, limit::RequestBodyLimitLayer};
+use tower_http::{cors::{Any, CorsLayer}, limit::RequestBodyLimitLayer, trace::TraceLayer};
 use tracing::log::info;
 
 #[tokio::main]
@@ -31,6 +31,7 @@ async fn main() {
         )
         .layer(RequestBodyLimitLayer::new(conf.limit.try_into().unwrap()))
         .route("/", get(|| async { "Hello, World!" }))
+        .layer(TraceLayer::new_for_http())
         .layer(
             ServiceBuilder::new()
                 .layer(HandleErrorLayer::new(|_: BoxError| async {
@@ -43,7 +44,7 @@ async fn main() {
     let uri = format!("0.0.0.0:{}", conf.port);
     let listener = tokio::net::TcpListener::bind(&uri).await.unwrap();
 
-    info!("🦀 server is starting on: :{}", conf.port);
+    info!("🦀 Server is starting on: :{}", conf.port);
 
     axum::serve(listener, app).await.unwrap();
 }
