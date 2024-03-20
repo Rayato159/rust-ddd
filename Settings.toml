@@ -1,0 +1,4 @@
+[server]
+port = 3000
+timeout = 30
+limit = 10 # MiB
