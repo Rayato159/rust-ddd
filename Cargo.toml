@@ -15,3 +15,5 @@ tracing = "0.1.40"
 tracing-subscriber = "0.3.18"
 tower-http = { version = "0.5.2", features = ["full"] }
 tower = { version = "0.4", features = ["full"] }
+diesel = { version = "2.1.0", features = ["postgres"] }
+chrono = "0.4.35"

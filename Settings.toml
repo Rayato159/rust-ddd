@@ -2,3 +2,6 @@
 port = 3000
 timeout = 30
 limit = 10 # MiB
+
+[database]
+database-url="postgres://postgres:123456@localhost/isekaishopdb?sslmode=disable"

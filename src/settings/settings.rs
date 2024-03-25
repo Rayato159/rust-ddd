@@ -2,9 +2,18 @@ use config::Config;
 use tracing::log::info;
 
 pub struct Settings {
+    pub server: Server,
+    pub database: Database
+}
+
+pub struct Server {
     pub port: i64,
     pub timeout: i64,
-    pub limit: i64
+    pub body_limit: i64
+}
+
+pub struct Database {
+    pub url: String
 }
 
 impl Settings {
@@ -20,9 +29,14 @@ impl Settings {
         info!("Settings has been loaded.");
 
         Self {
-            port: settings.get_int("server.port").unwrap(),
-            timeout: settings.get_int("server.timeout").unwrap(),
-            limit: settings.get_int("server.limit").unwrap()
+            server: Server {
+                port: settings.get("server.port").unwrap(),
+                timeout: settings.get("server.timeout").unwrap(),
+                body_limit: settings.get("server.limit").unwrap()
+            },
+            database: Database {
+                url: settings.get("database.url").unwrap()
+            }
         }
     }
 }
